@@ -1,41 +1,72 @@
 {
-  "name": "node-typescript-boilerplate",
+  "name": "stock-race-backend-api",
   "version": "0.0.0",
-  "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
+  "description": "The backend api for the Stock Race Application.",
+  "main": "build/index.js",
   "engines": {
     "node": ">= 16.13 <17"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
     "@types/jest": "~27.0.2",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "~16.11.6",
     "@typescript-eslint/eslint-plugin": "~5.7.0",
     "@typescript-eslint/parser": "~5.7.0",
-    "eslint": "~8.4.1",
-    "eslint-config-prettier": "~8.3.0",
+    "eslint": "^8.9.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "~25.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
     "jest": "~27.4.4",
+    "lint-staged": "^12.3.4",
     "prettier": "~2.5.1",
     "rimraf": "~3.0.2",
     "ts-jest": "~27.1.1",
+    "ts-node-dev": "^1.1.8",
     "tsutils": "~3.21.0",
     "typescript": "~4.5.3"
   },
   "scripts": {
-    "start": "node build/src/main.js",
+    "start": "node -r dotenv/config build/src/index.js",
+    "dev": "ts-node-dev -r dotenv/config --poll src/index.ts",
     "clean": "rimraf coverage build tmp",
-    "prebuild": "npm run lint",
-    "build": "tsc -p tsconfig.release.json",
-    "build:watch": "tsc -w -p tsconfig.release.json",
-    "lint": "eslint . --ext .ts,.tsx",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "lint": "eslint '*/**/*.{js,ts,tsx}'",
+    "lint:fix": "eslint '*/**/*.{js,ts,tsx}' --fix",
+    "format": "prettier --write .",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
-  "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "axios": "^0.26.0",
+    "body-parser": "^1.19.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.14.0",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.3",
     "tslib": "~2.3.1"
   },
   "volta": {
     "node": "16.13.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
