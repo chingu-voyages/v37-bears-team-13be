@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { signupRouter } from './routes/signup';
 import { usersRouter } from './routes/users';
-
+import { loginRouter } from './routes/login';
 // Initialize express.
 const app = express();
 
@@ -22,6 +22,7 @@ app.use(helmet());
 // Add routes.
 app.use(signupRouter);
 app.use(usersRouter);
+app.use(loginRouter);
 
 // Export the app and environment variables.
 export { app, NODE_ENV, PORT, ORIGIN, MONGO_URI, JWT_KEY };
