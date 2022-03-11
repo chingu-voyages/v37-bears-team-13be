@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { cookie } from 'express-validator';
-import { checkAuthorization } from '../middleware';
+import { checkAuthorization } from '../../middleware';
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
-import { User, UserDoc } from '../models';
+import { User, UserDoc } from '../../models';
 
 const router = express.Router();
 
