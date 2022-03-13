@@ -42,8 +42,7 @@ const userSchema = new mongoose.Schema(
     // Format the returned object in case the route/controller
     // decides to send information back to the client.
     toJSON: {
-      // @ts-ignore
-      transform(doc, ret) {
+      transform(_, ret) {
         ret.id = ret._id;
         delete ret._id;
         delete ret.password;
