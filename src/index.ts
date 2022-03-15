@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { app, PORT, MONGO_URI, JWT_KEY } from './app';
+import { app, PORT, MONGO_URI, JWT_KEY, FINNHUB_KEY } from './app';
 
 const start = async () => {
   // Check for key environment variables.
@@ -9,6 +9,10 @@ const start = async () => {
 
   if (!JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
+  }
+
+  if (!FINNHUB_KEY) {
+    throw new Error('FINNHUB_KEY must be defined');
   }
 
   // Try to connect to the database.

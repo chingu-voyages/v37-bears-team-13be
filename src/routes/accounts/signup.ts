@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
-import { User, UserDoc } from '../models';
+import { User, UserDoc } from '../../models';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post(
     // Check if user exists in db.
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(400).json({ error: 'user already exists' });
+      res.status(409).json({ error: 'user already exists' });
       return;
     }
 
