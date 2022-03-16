@@ -13,6 +13,7 @@ import {
   stocksRouter,
   usersRouter,
 } from './routes';
+
 // Initialize express.
 const app = express();
 
