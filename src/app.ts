@@ -1,13 +1,14 @@
 import express from 'express';
 import 'express-async-errors';
 import cors from 'cors';
-import { json } from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import {
   addStockRouter,
   addUserStockRouter,
   authRouter,
+  deleteStockRouter,
   loginRouter,
   signupRouter,
   stocksRouter,
@@ -23,6 +24,7 @@ const { NODE_ENV, PORT, ORIGIN, MONGO_URI, JWT_KEY, FINNHUB_KEY } = process.env;
 // Setup application.
 app.use(cors({ origin: ORIGIN, credentials: true }));
 app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet());
 
@@ -35,6 +37,7 @@ app.use(usersRouter);
 // Add stock routes.
 app.use(addStockRouter);
 app.use(stocksRouter);
+app.use(deleteStockRouter);
 
 // Add user stock routes.
 app.use(addUserStockRouter);
