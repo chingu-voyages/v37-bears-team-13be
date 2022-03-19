@@ -2,19 +2,15 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { User, UserDoc } from '../../models';
-import customError from '../../util/customError';
+import { findUser } from '../../service/account/user.service';
 
 export const signupHandler = async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body;
-
     // Check if user exists in db.
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) customError(409, 'User already exist');
+    await findUser({ username: req.body.username });
 
     // Create user and save them to db.
-    const user: UserDoc = User.build({ username, email, password });
+    const user: UserDoc = User.build({ ...req.body });
     await user.save();
 
     // Create a JWT.
