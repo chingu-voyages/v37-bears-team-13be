@@ -1,36 +1,29 @@
-import request from 'supertest';
-
-import { app } from '../../app';
-
-type User = { username: string; password: string };
-
-it('Post/ should return 200 if an user was correctly login', () => {
-  const testUser: User = {
-    username: 'testUser',
-    password: 'test',
-  };
-
-  request(app).post('/api/v1/users/login').send(testUser).expect(200);
-});
-
-it('Post/ should return 401 given invalid credentials', () => {
-  const testUsers: User[] = [
-    {
-      username: '',
-      password: 'te',
-    },
-    {
-      username: 'Mario',
-      password: '',
-    },
-    {
-      username: '',
-      password: '',
-    },
-  ];
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const user of testUsers) {
-    request(app).post('/api/v1/users/login').send(user).expect(401);
-  }
+describe('login', () => {
+  describe('given an user with correct credentials', () => {
+    it('should return 200', () => {});
+    describe('given an username with more than 20 characters', () => {
+      it('should return an error', () => {});
+    });
+    describe('given an username with no characters', () => {
+      it('should return an error', () => {});
+    });
+    describe('given an email with more than 30 characters', () => {
+      it('should return an error', () => {});
+    });
+    describe('given an email with no characters', () => {
+      it('should return an error', () => {});
+    });
+    describe('given an password with more than 20 characters', () => {
+      it('should return an error', () => {});
+    });
+    describe('given an password with no characters', () => {
+      it('should return an error', () => {});
+    });
+    describe('given a non existing user', () => {
+      it('should return a 401 status', () => {});
+    });
+    describe('given an invalid password', () => {
+      it('should return an error', () => {});
+    });
+  });
 });
