@@ -3,19 +3,7 @@ import { Request, Response } from 'express';
 
 import { User } from '../../models';
 import { PasswordManager } from '../../util/hash/index';
-
-interface MyError {
-  status: number;
-  message: string;
-}
-
-const customError = (
-  status: number,
-  message: string = 'Invalid credentials'
-): MyError => ({
-  status,
-  message,
-});
+import customError from '../../util/customError';
 
 export const loginHandler = async (req: Request, res: Response) => {
   try {
