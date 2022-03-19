@@ -11,9 +11,7 @@ export const usersHandler = async (_req: Request, res: Response) => {
     res.status(200).json({
       users,
     });
-  } catch (err) {
-    res
-      .status(400)
-      .json({ message: 'No users records in collection', data: null });
+  } catch (err: any) {
+    res.status(err.status).json({ message: err.message, data: null });
   }
 };
