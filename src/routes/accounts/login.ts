@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 
-import { loginHandler } from '../../controller/account/login.controller';
+import { loginUserHandler } from '../../controller/account/login.controller';
 
 const loginRouter = require('express').Router();
 
@@ -11,7 +11,7 @@ loginRouter.post(
     body('email').isLength({ max: 30 }).isEmail().escape(),
     body('password').isLength({ min: 2, max: 20 }).escape(),
   ],
-  loginHandler
+  loginUserHandler
 );
 
 export { loginRouter };

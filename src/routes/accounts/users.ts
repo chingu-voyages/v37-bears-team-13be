@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { usersHandler } from '../../controller/account/users.controller';
+import { getAllUsersHandler } from '../../controller/account/users.controller';
 
 const router = express.Router();
 
-router.get('/api/v1/users/', usersHandler);
+router.get('/api/v1/users/', getAllUsersHandler);
 
 export { router as usersRouter };

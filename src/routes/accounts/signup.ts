@@ -1,7 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
 
-import { signupHandler } from '../../controller/account/signup.controller';
+import { signupUserHandler } from '../../controller/account/signup.controller';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.post(
     body('email').isLength({ max: 30 }).isEmail().escape(),
     body('password').isLength({ min: 2, max: 20 }).escape(),
   ],
-  signupHandler
+  signupUserHandler
 );
 
 export { router as signupRouter };

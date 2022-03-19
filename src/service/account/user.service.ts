@@ -25,3 +25,15 @@ export const findUser = async ({ username, password }: UserInput) => {
     throw new Error(err);
   }
 };
+
+export const findAllUsers = async () => {
+  try {
+    const users = await User.find();
+
+    if (!users) throw new Error('No users found');
+
+    return users;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
+};

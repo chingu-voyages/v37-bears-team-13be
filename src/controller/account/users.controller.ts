@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { User } from '../../models/user';
+import { findAllUsers } from '../../service/account/user.service';
 
-export const usersHandler = async (_req: Request, res: Response) => {
+export const getAllUsersHandler = async (_req: Request, res: Response) => {
   try {
-    const users = await User.find();
+    const users = await findAllUsers();
 
     if (!users) throw new Error('No users found');
 

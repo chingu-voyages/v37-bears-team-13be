@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User, UserDoc } from '../../models';
 import { findUser } from '../../service/account/user.service';
 
-export const signupHandler = async (req: Request, res: Response) => {
+export const signupUserHandler = async (req: Request, res: Response) => {
   try {
     // Check if user exists in db.
     await findUser({ username: req.body.username });

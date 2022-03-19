@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { findUser } from '../../service/account/user.service';
 
-export const loginHandler = async (req: Request, res: Response) => {
+export const loginUserHandler = async (req: Request, res: Response) => {
   try {
     // Find User in Database
     const user = await findUser(req.body);
