@@ -1,34 +1,21 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
-import { User } from '../../models';
-import { PasswordManager } from '../../util/hash/index';
-import customError from '../../util/customError';
+import { findUser } from '../../service/account/login.service';
 
 export const loginHandler = async (req: Request, res: Response) => {
   try {
-    const { username, password } = req.body;
     // Find User in Database
-    const user = await User.findOne({ username });
-    if (!user) throw customError(401);
+    const user = await findUser(req.body);
 
-    const passwordCorrect = await PasswordManager.compare(
-      user.password,
-      password
-    );
-    // Return error is user does not exist or password is incorrect
-    if (!passwordCorrect) throw customError(401);
+    if (!process.env.JWT_KEY)
+      throw new Error('Missing JWT_KEY, please add it in your .env file');
+
     // username & password are correct
     // create a jwt
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-      },
-      process.env.JWT_KEY!,
-      { expiresIn: 60 * 60 }
-    );
+    const userJwt = jwt.sign({ ...user }, process.env.JWT_KEY, {
+      expiresIn: 60 * 60,
+    });
     res
       .status(200)
       .cookie('access_token', userJwt, {
@@ -37,7 +24,7 @@ export const loginHandler = async (req: Request, res: Response) => {
       })
       .json(user);
   } catch (err: any) {
-    res.status(err.status).json({
+    res.status(409).json({
       message: err.message,
     });
   }
