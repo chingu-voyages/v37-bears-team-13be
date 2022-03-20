@@ -2,13 +2,13 @@ import { User } from '../models';
 import { PasswordManager } from '../util/hash';
 
 interface UserInput {
-  username: string;
+  email: string;
   password?: string;
 }
 
-export const findUser = async ({ username, password }: UserInput) => {
+export const findUser = async ({ email, password }: UserInput) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) return false;
 
