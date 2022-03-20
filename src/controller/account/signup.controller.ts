@@ -7,7 +7,9 @@ import { findUser } from '../../service/user.service';
 export const signupUserHandler = async (req: Request, res: Response) => {
   try {
     // Check if user exists in db.
-    await findUser({ username: req.body.username });
+    const userRecord = await findUser({ username: req.body.username });
+
+    if (userRecord) throw new Error('User already exist');
 
     // Create user and save them to db.
     const user: UserDoc = User.build({ ...req.body });
@@ -30,6 +32,6 @@ export const signupUserHandler = async (req: Request, res: Response) => {
   } catch (err: any) {
     const msg = 'Something went wrong saving to database';
     console.error(`${msg}: ${(err as Error).message}`);
-    res.status(err.status).json({ message: err.message });
+    res.status(409).json({ message: err.message });
   }
 };

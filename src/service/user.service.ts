@@ -10,7 +10,7 @@ export const findUser = async ({ username, password }: UserInput) => {
   try {
     const user = await User.findOne({ username });
 
-    if (!user) throw new Error('User not found');
+    if (!user) return false;
 
     const { password: other, _id, __v, ...rest } = user.toJSON();
 
