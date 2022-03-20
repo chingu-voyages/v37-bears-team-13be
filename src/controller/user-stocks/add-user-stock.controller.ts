@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
 
-import { Stock, UserStock, UserStockDoc } from '../../models';
 import customError from '../../util/customError';
+
+import {
+  findUserStocks,
+  createUserStock,
+} from '../../service/userStock.service';
+import { findStockHandler } from '../../service/stock.service';
 
 export const addStocksHandler = async (req: Request, res: Response) => {
   try {
@@ -15,27 +19,18 @@ export const addStocksHandler = async (req: Request, res: Response) => {
     const { stockId, userNotes } = req.body;
 
     // Check if user has already added this stock to their collection.
-    const hasUserStock = await UserStock.find({ stock: stockId });
+    const hasUserStock = await findUserStocks(stockId);
+
     if (hasUserStock && hasUserStock.length) {
       res.status(409).json({ error: 'Stock already added to user.' });
       return;
     }
 
     // If not, see if the stock exists in the commmunity database.
-    const stock = await Stock.findById(stockId);
-    if (!stock) {
-      res.status(400).json({ error: 'Stock not found in our database.' });
-      return;
-    }
+    const stock = await findStockHandler(stockId);
 
     // Associate the existing stock with this user.
-    const userStock: UserStockDoc = UserStock.build({
-      userId: (currentUser as JwtPayload).id,
-      userNotes: userNotes as string,
-      stock,
-    });
-
-    await userStock.save();
+    const userStock = await createUserStock(stock, currentUser, userNotes);
 
     // Send back userStock.
     res.status(201).json(userStock);

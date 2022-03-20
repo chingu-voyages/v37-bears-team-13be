@@ -2,21 +2,19 @@ import { Stock, StockDoc } from '../models';
 
 type StockInput = string;
 
-export const findStock = async (symbol: StockInput) => {
+export const findStockHandler = async (symbol: StockInput) => {
   try {
     const stock = await Stock.findOne({ symbol });
 
     if (!stock) throw new Error('Stock not found');
 
-    const { _id, __v, ...rest } = stock.toJSON();
-
-    return rest;
+    return stock;
   } catch (err: any) {
     throw new Error(err);
   }
 };
 
-export const createStock = async (name: string, symbol: string) => {
+export const createStockHandler = async (name: string, symbol: string) => {
   try {
     const stock: StockDoc = Stock.build({ name, symbol });
     await stock.save();

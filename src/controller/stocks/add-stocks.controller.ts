@@ -2,7 +2,10 @@ import { Request, Response } from 'express';
 
 import { getCompany } from '../../util/api';
 import customError from '../../util/customError';
-import { findStock, createStock } from '../../service/stock.service';
+import {
+  createStockHandler,
+  findStockHandler,
+} from '../../service/stock.service';
 
 export const addStockHandler = async (req: Request, res: Response) => {
   try {
@@ -16,7 +19,7 @@ export const addStockHandler = async (req: Request, res: Response) => {
     const { symbol } = req.body;
 
     // Check if stock exists in db.
-    await findStock(symbol);
+    await findStockHandler(symbol);
 
     // Check that the stock can actually get a quote from Finnhub.
     // Right now, this might only work with companies (because we're only
@@ -49,7 +52,7 @@ export const addStockHandler = async (req: Request, res: Response) => {
     // Add company/stock name.
     const { name } = successData!;
 
-    const stock = await createStock(name, symbol);
+    const stock = await createStockHandler(name, symbol);
 
     // Send back the stock.
     res.status(201).json(stock);
