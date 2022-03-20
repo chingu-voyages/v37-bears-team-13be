@@ -1,5 +1,5 @@
-import { User } from '../../models';
-import { PasswordManager } from '../../util/hash';
+import { User } from '../models';
+import { PasswordManager } from '../util/hash';
 
 interface UserInput {
   username: string;

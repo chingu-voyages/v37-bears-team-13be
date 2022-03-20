@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { User, UserDoc } from '../../models';
-import { findUser } from '../../service/account/user.service';
+import { findUser } from '../../service/user.service';
 
 export const signupUserHandler = async (req: Request, res: Response) => {
   try {

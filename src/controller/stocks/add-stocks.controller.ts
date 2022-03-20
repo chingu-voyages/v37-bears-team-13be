@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { Stock, StockDoc } from '../../models';
 import { getCompany } from '../../util/api';
 import customError from '../../util/customError';
+import { findStock, createStock } from '../../service/stock.service';
 
 export const addStockHandler = async (req: Request, res: Response) => {
   try {
@@ -16,10 +16,7 @@ export const addStockHandler = async (req: Request, res: Response) => {
     const { symbol } = req.body;
 
     // Check if stock exists in db.
-    const existingStock = await Stock.findOne({ symbol });
-
-    if (existingStock)
-      customError(409, 'This marketable security already exists.');
+    await findStock(symbol);
 
     // Check that the stock can actually get a quote from Finnhub.
     // Right now, this might only work with companies (because we're only
@@ -28,6 +25,7 @@ export const addStockHandler = async (req: Request, res: Response) => {
       throw new Error(
         'Missing FINNHUB_KEY key, please add it to your .env file'
       );
+
     const { error, errorData, found, successData } = await getCompany({
       symbol,
       apiKey: process.env.FINNHUB_KEY as string,
@@ -51,9 +49,7 @@ export const addStockHandler = async (req: Request, res: Response) => {
     // Add company/stock name.
     const { name } = successData!;
 
-    const stock: StockDoc = Stock.build({ name, symbol });
-
-    await stock.save();
+    const stock = await createStock(name, symbol);
 
     // Send back the stock.
     res.status(201).json(stock);

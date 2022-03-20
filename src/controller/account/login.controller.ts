@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
-import { findUser } from '../../service/account/user.service';
+import { findUser } from '../../service/user.service';
 
 export const loginUserHandler = async (req: Request, res: Response) => {
   try {

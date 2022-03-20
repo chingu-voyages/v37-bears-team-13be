@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { findAllUsers } from '../../service/account/user.service';
+import { findAllUsers } from '../../service/user.service';
 
 export const getAllUsersHandler = async (_req: Request, res: Response) => {
   try {
