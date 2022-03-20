@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import request from 'supertest';
 
-import { app } from '../../app';
-import * as UserService from '../../service/user.service';
+import { app } from '../app';
+import * as UserService from '../service/user.service';
 
 describe('signup', () => {
   describe('given an username with more than 20 characters', () => {
