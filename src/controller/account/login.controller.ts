@@ -8,6 +8,8 @@ export const loginUserHandler = async (req: Request, res: Response) => {
     // Find User in Database
     const user = await findUser(req.body);
 
+    if (!user) throw new Error('User not found');
+
     if (!process.env.JWT_KEY)
       throw new Error('Missing JWT_KEY, please add it in your .env file');
 

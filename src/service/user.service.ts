@@ -22,7 +22,7 @@ export const findUser = async ({ email, password }: UserInput) => {
 
     return rest;
   } catch (err: any) {
-    throw new Error(err);
+    throw Error(err);
   }
 };
 
