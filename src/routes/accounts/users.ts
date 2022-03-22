@@ -1,14 +1,9 @@
-import express, { Response } from 'express';
-import { User } from '../../models/user';
+import express from 'express';
+
+import { getAllUsersHandler } from '../../controller/account/users.controller';
 
 const router = express.Router();
 
-router.get('/api/v1/users/', async (_, res: Response) => {
-  const getUsers = await User.find();
-
-  res.status(200).json({
-    getUsers,
-  });
-});
+router.get('/api/v1/users/', getAllUsersHandler);
 
 export { router as usersRouter };
