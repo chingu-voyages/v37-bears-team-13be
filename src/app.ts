@@ -13,6 +13,7 @@ import {
   signupRouter,
   stocksRouter,
   usersRouter,
+  homeRouter,
 } from './routes';
 
 // Initialize express.
@@ -27,7 +28,8 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet());
-
+// Add heroku homepage route to correct error
+app.use(homeRouter);
 // Add user routes.
 app.use(authRouter);
 app.use(loginRouter);
