@@ -1,9 +1,9 @@
-import express from 'express';
+import express, { Response, Request } from 'express';
 
-const router = express.Router();
+const app = express();
 
-router.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to our Stock Race backend hosted on Heroku');
 });
 
-export { router as homeRouter };
+export { app as herokuHomePage };

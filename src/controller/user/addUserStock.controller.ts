@@ -6,7 +6,7 @@ import {
   findUserStocks,
   createUserStock,
 } from '../../service/userStock.service';
-import { findStockHandler } from '../../service/stock.service';
+import { findStock } from '../../service/stock.service';
 
 export const addStocksHandler = async (req: Request, res: Response) => {
   try {
@@ -21,20 +21,18 @@ export const addStocksHandler = async (req: Request, res: Response) => {
     // Check if user has already added this stock to their collection.
     const hasUserStock = await findUserStocks(stockId);
 
-    if (hasUserStock && hasUserStock.length) {
-      res.status(409).json({ error: 'Stock already added to user.' });
-      return;
-    }
+    if (hasUserStock && hasUserStock.length)
+      return res.status(409).json({ error: 'Stock already added to user.' });
 
     // If not, see if the stock exists in the commmunity database.
-    const stock = await findStockHandler(stockId);
+    const stock = await findStock(stockId);
 
     // Associate the existing stock with this user.
     const userStock = await createUserStock(stock, currentUser, userNotes);
 
     // Send back userStock.
-    res.status(201).json(userStock);
+    return res.status(201).json(userStock);
   } catch (err: any) {
-    res.status(err.status).json({ message: err.message, data: null });
+    return res.status(err.status).json({ message: err.message, data: null });
   }
 };

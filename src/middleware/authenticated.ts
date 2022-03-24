@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { checkAuthorization, cookieJWTCheck } from '../../middleware';
+import { checkAuthorization, cookieJWTCheck } from '.';
 
 const router = express.Router();
 

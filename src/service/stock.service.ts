@@ -2,7 +2,7 @@ import { Stock, StockDoc } from '../models';
 
 type StockInput = string;
 
-export const findStockHandler = async (symbol: StockInput) => {
+export const findStock = async (symbol: StockInput) => {
   try {
     const stock = await Stock.findOne({ symbol });
 
@@ -14,7 +14,7 @@ export const findStockHandler = async (symbol: StockInput) => {
   }
 };
 
-export const createStockHandler = async (name: string, symbol: string) => {
+export const createStock = async (name: string, symbol: string) => {
   try {
     const stock: StockDoc = Stock.build({ name, symbol });
     await stock.save();
@@ -30,6 +30,16 @@ export const findAllStocksHandler = async () => {
 
     return stocks;
   } catch (err) {
-    throw new Error('Cant find the stock records');
+    throw new Error('Stocks records not found');
+  }
+};
+
+export const deleteStock = async (symbol: string) => {
+  try {
+    const existingStock = await Stock.findOne({ symbol });
+    if (!existingStock) throw Error('Record not found');
+    await Stock.deleteOne({ symbol });
+  } catch (err: any) {
+    throw new Error(err.message);
   }
 };
